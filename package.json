@@ -1,0 +1,21 @@
+{
+  "name": "DebugConsole",
+  "version": "0.1.0",
+  "description": "A client application capable of connecting to an emulator running the appropriate script and displaying to the console all debug output streamed from the running game.",
+  "main": "app.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:MNGoldenEagle/DebugConsole.git"
+  },
+  "author": "MNGoldenEagle",
+  "license": "Unlicense",
+  "bugs": {
+    "url": "https://github.com/MNGoldenEagle/DebugConsole/issues"
+  },
+  "dependencies": {
+    "text-encoding": "^0.6.4"
+  }
+}
