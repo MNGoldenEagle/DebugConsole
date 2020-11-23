@@ -3,6 +3,11 @@ const Socket = require('net').Socket;
 
 let client = new Socket();
 
+const DoDecoding = (process.argv.length > 2 && process.argv[2] === '--utf8') ? false : true;
+const EucJpDecoder = new TextDecoder('euc-jp');
+
+console.log(`Decoding from ${DoDecoding ? 'euc-jp' : 'utf-8'}.`);
+
 client.on('error', function(err) {
 	if (err.message.includes('ECONNREFUSED')) {
 		console.error('Could not connect to game.  Start server and try again.');
@@ -17,7 +22,7 @@ client.connect(411, '127.0.0.1', function() {
 
 	client.on('data', function(data) {
 		let converted = new Uint8Array(data);
-		let decoded = new TextDecoder('euc-jp').decode(converted);
+		let decoded = DoDecoding ? EucJpDecoder.decode(converted) : converted;
 		process.stdout.write(decoded);
 	});
 
