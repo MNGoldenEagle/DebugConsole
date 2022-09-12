@@ -22,7 +22,7 @@ If you don't see the Debugger menu, ensure you have enabled the debugger functio
 To run the script, open the Scripts window and double-click on DebugServer.js on the left side. It will open the
 server port and be ready for the command line app to connect.
 
-## At the Command Line
+### Node.js App
 
 1. If you do not have Node.js installed, run:
 ```bash
