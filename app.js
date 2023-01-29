@@ -2,6 +2,7 @@ const TextDecoder = require('text-encoding').TextDecoder;
 const Socket = require('net').Socket;
 
 let client = new Socket();
+let host = 'localhost';
 let port = 411;
 let decode = true;
 let portArg = false;
@@ -16,9 +17,18 @@ for (let i = 0; i < process.argv.length; i++) {
 		} else {
 			portArg = true;
 		}
+	} else if (process.argv[i].startsWith('--host')) {
+		if (arg.indexOf('=') > 0) {
+			host = arg.split('=')[1];
+		} else {
+			hostArg = true;
+		}
 	} else if (portArg) {
 		port = arg;
 		portArg = false;
+	} else {
+		host = arg;
+		hostArg = false;
 	}
 }
 
@@ -40,8 +50,8 @@ client.on('error', function(err) {
 	}
 });
 
-client.connect(port, 'localhost', function() {
-	console.log(`Connection established on port ${port}.`);
+client.connect(port, host, function() {
+	console.log(`Connection established on ${host}:${port}.`);
 
 	client.on('data', function(data) {
 		let converted = new Uint8Array(data);
