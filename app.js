@@ -6,6 +6,7 @@ let host = 'localhost';
 let port = 411;
 let decode = true;
 let portArg = false;
+let hostArg = false;
 
 for (let i = 0; i < process.argv.length; i++) {
 	let arg = process.argv[i];
@@ -26,20 +27,25 @@ for (let i = 0; i < process.argv.length; i++) {
 	} else if (portArg) {
 		port = arg;
 		portArg = false;
-	} else {
+	} else if (hostArg) {
 		host = arg;
 		hostArg = false;
 	}
 }
 
+if (hostArg) {
+	console.error("Host required after --host.");
+	return 1;
+}
+
 if (portArg) {
 	console.error("Port number required with --port.");
-	return -1;
+	return 1;
 }
 
 const EucJpDecoder = new TextDecoder('euc-jp');
 
-console.log(`Decoding from ${decode ? 'euc-jp' : 'utf-8'}.`);
+console.log(`Connecting to ${host}:${port}...`);
 
 client.on('error', function(err) {
 	if (err.message.includes('ECONNREFUSED')) {
@@ -52,6 +58,7 @@ client.on('error', function(err) {
 
 client.connect(port, host, function() {
 	console.log(`Connection established on ${host}:${port}.`);
+	console.log(`Decoding from ${decode ? 'euc-jp' : 'utf-8'}.`);
 
 	client.on('data', function(data) {
 		let converted = new Uint8Array(data);
